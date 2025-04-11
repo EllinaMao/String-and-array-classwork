@@ -16,14 +16,14 @@ class String {
 private:
 	char* str = nullptr;
 	static int count;
-	void InputStr(char*& temp);
-
+	void InputStr(char*& temp) const;
+	size_t GetSize() const;
 
 public:
 	String();
 	String(int size);
 	String(const char* str_user);
-	String(String& a);
+	String(const String& a);
 	~String();
 
 

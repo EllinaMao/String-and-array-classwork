@@ -1,17 +1,18 @@
 #include "class String.h"
 
-
+//
 int String::count = 0;
 
-void String::InputStr(char*& temp)
+void String::InputStr(char*& temp) const
 {
 	if (temp) {
 		delete[] temp;
 	}
 
-	short tempsize = 50;
+	size_t tempsize = GetSize();
 	char* sourse = new char[tempsize];
 
+	cout << "Enter a string: ";
 	cin.getline(sourse, tempsize);
 	if (cin.fail()) {
 		cin.clear();
@@ -23,8 +24,19 @@ void String::InputStr(char*& temp)
 	strcpy_s(temp, size, sourse);
 
 	delete[] sourse;
-
 }
+
+
+size_t String::GetSize() const
+{
+	size_t size = 0;
+	cout << "Enter expected size(its can be bigger, but cant be smaller)" << endl;
+	cin >> size;
+	cin.clear();
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	return size;
+}
+
 String::String()
 {
 	str = new char[80] {"Unknown"};
@@ -51,14 +63,12 @@ String::String(const char* str_user)
 }
 
 
-String::String(String& a)
+String::String(const String& a)
 {
 	cout << "Copy constuct" << endl;
 	size_t size = strlen(a.str) + 1;
 	str = new char[size];
-	for (int i = 0; i < size; i++) {
-		str[i] = a.str[i];
-	}
+	strcpy_s(str, size, a.str);
 	count++;
 }
 

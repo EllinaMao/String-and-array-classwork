@@ -36,7 +36,7 @@ int main()
     cout << "Updated Default String: ";  
     defaultString.Output();  
 
-    cout << "Enter a string: ";  
+
     defaultString.SetUserStr();  
     cout << "User Input String: ";  
     defaultString.Output();  
