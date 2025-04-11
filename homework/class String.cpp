@@ -41,7 +41,7 @@ String::String()
 	str = new char[80] {"Unknown"};
 	count++;
 }
-//i was kinda confused how to make (delegation?) between String(const char* str_user) and String::String(int size) so i just decised to do it between String::String and this. If size will be lower then 0, so will be called default metod and will inicialize string with 80 characters and "unknown" text. 
+
 String::String(int size) : String(size > 0 ? new char[size] {} : "Unknown") {
 	if (size <= 0) {
 		cout << "String is too short" << endl;
