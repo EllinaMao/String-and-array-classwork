@@ -26,7 +26,6 @@ void String::InputStr(char*& temp) const
 	delete[] sourse;
 }
 
-
 size_t String::GetSize() const
 {
 	size_t size = 0;
@@ -42,23 +41,18 @@ String::String()
 	str = new char[80] {"Unknown"};
 	count++;
 }
-
-String::String(int size)
-{
-	if (size > 0) {
-	str = new char[size] {};
-	count++;
-	}
-	else {
+//i was kinda confused how to make (delegation?) between String(const char* str_user) and String::String(int size) so i just decised to do it between String::String and this. If size will be lower then 0, so will be called default metod and will inicialize string with 80 characters and "unknown" text. 
+String::String(int size) : String(size > 0 ? new char[size] {} : "Unknown") {
+	if (size <= 0) {
 		cout << "String is too short" << endl;
 	}
 }
 
-String::String(const char* str_user)
-{
+
+String::String(const char* str_user) {
 	size_t size = strlen(str_user) + 1;
 	str = new char[size];
-	strcpy_s(str,size, str_user);
+	strcpy_s(str, size, str_user);
 	count++;
 }
 
