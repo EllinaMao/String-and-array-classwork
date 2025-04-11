@@ -3,7 +3,7 @@
 
 int String::count = 0;
 
-int  String::InputStr(char*temp)
+void String::InputStr(char*& temp)
 {
 	if (temp) {
 		delete[] temp;
@@ -13,15 +13,18 @@ int  String::InputStr(char*temp)
 	char* sourse = new char[tempsize];
 
 	cin.getline(sourse, tempsize);
-	if (cin.fail()) { cin.clear(); cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); }
+	if (cin.fail()) {
+		cin.clear();
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
 
 	size_t size = strlen(sourse) + 1;
-	temp = new char[tempsize];
-	strcpy_s(temp, tempsize, sourse);
-	return size;
+	temp = new char[size];
+	strcpy_s(temp, size, sourse);
+
+	delete[] sourse;
+
 }
-
-
 String::String()
 {
 	str = new char[80] {"Unknown"};
@@ -81,13 +84,13 @@ void String::SetStr(const char* str_user)
 
 void String::SetUserStr()
 {
-	if (str) {
-		delete[] str;
-	}
-	char* temp = nullptr;
+    if (str) {
+        delete[] str;
+    }
 
-	size_t size = InputStr(temp);
-	str = temp;
+    char* temp = nullptr;
+    InputStr(temp);
+    str = temp;
 }
 
 const char* String::GetStr() const
@@ -95,10 +98,15 @@ const char* String::GetStr() const
 	return str;
 }
 
-void String::Output() const
-{
-	cout << str << endl;
+void String::Output() const {
+	if (str) {
+		cout << str << endl;
+	}
+	else {
+		cout << "Cant show empty str" << endl;
+	}
 }
+
 
 int String::Count()
 {

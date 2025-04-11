@@ -16,7 +16,7 @@ class String {
 private:
 	char* str = nullptr;
 	static int count;
-	int InputStr(char* temp);
+	void InputStr(char*& temp);
 
 
 public:
