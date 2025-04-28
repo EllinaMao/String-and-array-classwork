@@ -9,7 +9,7 @@ void String::InputStr(char*& temp) const
 		delete[] temp;
 	}
 
-	size_t tempsize = GetSize();
+	size_t tempsize = InputSize();
 	char* sourse = new char[tempsize];
 
 	cout << "Enter a string: ";
@@ -26,7 +26,7 @@ void String::InputStr(char*& temp) const
 	delete[] sourse;
 }
 
-size_t String::GetSize() const
+size_t String::InputSize() const
 {
 	size_t size = 0;
 	cout << "Enter expected size(its can be bigger, but cant be smaller)" << endl;
@@ -42,7 +42,7 @@ String::String()
 	count++;
 }
 
-String::String(int size) : String(size > 0 ? new char[size] {} : "Unknown") {
+String::String(size_t size) : String(size > 0 ? new char[size] {} : "Unknown") {
 	if (size <= 0) {
 		cout << "String is too short" << endl;
 	}
@@ -64,6 +64,59 @@ String::String(const String& a)
 	str = new char[size];
 	strcpy_s(str, size, a.str);
 	count++;
+}
+
+String::String(String&& a) noexcept
+{
+	str = a.str;
+	a.str = nullptr;
+}
+
+String& String::operator=(const String& a)
+{
+	if (str) {
+		delete[] str;
+	}
+
+	cout << "Copy constuct =" << endl;
+	size_t size = strlen(a.str) + 1;
+	str = new char[size];
+	strcpy_s(str, size, a.str);
+	count++;
+	return *this;
+}
+
+String& String::operator=(String&& a) noexcept
+{
+	if (str) {
+		delete[] str;}
+	str = a.str;
+	a.str = nullptr;
+	return *this;
+}
+
+String String::operator+(const String& other) const
+{
+
+	size_t size1 = this->GetSize();
+	size_t size2 = other.GetSize();
+	size_t newSize = size1 + size2 + 1;
+
+	String newStr(newSize);
+
+
+	if (this->str && size1 > 0) {
+		strcpy_s(newStr.str, newSize, newStr.str);
+	}
+	else {
+		newStr.str[0] = '\0';
+	}
+
+	if (other.str && size2 > 0) {
+		strcat_s(newStr.str, newSize, other.str);
+	}
+
+	return newStr;
 }
 
 String::~String()
@@ -121,3 +174,37 @@ void String::OutputCount()
 {
 	cout << "Count: " << count << endl;
 }
+
+
+
+ostream& operator<<(ostream& os, const String& s)
+{
+	os << s.str << endl;
+	return os;
+}
+
+istream& operator>>(istream& is, String& s)
+{
+	if (s.str) {
+		delete[] s.str;
+	}
+
+	size_t tempsize = s.InputSize();
+	char* sourse = new char[tempsize];
+
+	cout << "Enter a string: ";
+	is.getline(sourse, tempsize); // Используем поток is вместо cin
+	if (is.fail()) {
+		is.clear();
+		is.ignore(numeric_limits<streamsize>::max(), '\n');
+	}
+
+	size_t size = strlen(sourse) + 1;
+	s.str = new char[size];
+	strcpy_s(s.str, size, sourse);
+
+	delete[] sourse;
+
+	return is;
+}
+
