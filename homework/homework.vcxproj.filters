@@ -21,9 +21,15 @@
     <ClCompile Include="class String.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="class Array.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="class String.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="class Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

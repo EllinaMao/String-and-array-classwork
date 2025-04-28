@@ -22,14 +22,16 @@ private:
 	size_t GetSize() const;
 	static int count;
 	void SetSize(size_t size);
+
 public:
 	Array();
-	Array(int size);
+    explicit Array(int size);
 	Array(const int* arr_user, size_t size);
 	Array(const Array& a);
 	~Array();
+
 	void SetArray(const int* arr_user, size_t size);
-	void SetUserArray();
+
 	const int* GetArray() const;
 	void Output() const;
 	static int Count();
