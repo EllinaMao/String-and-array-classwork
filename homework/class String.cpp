@@ -38,14 +38,19 @@ size_t String::InputSize() const
 
 String::String()
 {
-	str = new char[80] {"Unknown"};
+	str = new char[8] {"Unknown"};
 	count++;
 }
 
-String::String(size_t size) : String(size > 0 ? new char[size] {} : "Unknown") {
-	if (size <= 0) {
+String::String(size_t size) {
+	if (size > 0) {
+		str = new char[size] {};
+	}
+	else {
+		str = new char[8] {"Unknown"};
 		cout << "String is too short" << endl;
 	}
+	count++;
 }
 
 
@@ -97,27 +102,28 @@ String& String::operator=(String&& a) noexcept
 
 String String::operator+(const String& other) const
 {
-
 	size_t size1 = this->GetSize();
 	size_t size2 = other.GetSize();
-	size_t newSize = size1 + size2 + 1;
+	size_t newSize = size1 + size2 + 1; 
 
 	String newStr(newSize);
 
-
+	// Copy the first string
 	if (this->str && size1 > 0) {
-		strcpy_s(newStr.str, newSize, newStr.str);
+		strcpy_s(newStr.str, newSize, this->str);
 	}
 	else {
-		newStr.str[0] = '\0';
+		newStr.str[0] = '\0'; 
 	}
 
+	// Append the second string
 	if (other.str && size2 > 0) {
 		strcat_s(newStr.str, newSize, other.str);
 	}
 
-	return newStr;
+	return newStr; 
 }
+
 
 String::~String()
 {
